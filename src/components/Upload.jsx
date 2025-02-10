@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import "react-toastify/dist/ReactToastify.css";
+import {ProgressSpinner} from "primereact/progressspinner";
 
 const Upload = () => {
   const [file, setFile] = useState(null);
   const [extractedText, setExtractedText] = useState("");
   const [analysis, setAnalysis] = useState(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -44,6 +45,7 @@ const Upload = () => {
   };
 
   const handleAnalyze = async (text) => {
+    setIsAnalyzing(true);
     try {
       const response = await axios.post("https://docanalyzer-backend.onrender.com/api/analyze", {
         text,
@@ -54,6 +56,8 @@ const Upload = () => {
       toast.error(
         "Analysis Failed: " + error.response?.data?.error || error.message
       );
+    } finally {
+      setIsAnalyzing(false);
     }
   };
 
@@ -93,7 +97,13 @@ const Upload = () => {
           Upload File
         </button>
 
-        {analysis && (
+        {isAnalyzing && (
+          <div className="mt-4 d-flex justify-content-center">
+            <ProgressSpinner />
+          </div>
+        )}
+
+        {analysis && !isAnalyzing && (
           <div className="mt-4 p-3 border rounded bg-light">
             <h5>Analysis:</h5>
             <p>
