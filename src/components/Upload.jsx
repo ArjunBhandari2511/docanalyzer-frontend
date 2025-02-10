@@ -23,7 +23,7 @@ const Upload = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/upload",
+        "https://docanalyzer-backend.onrender.com/api/upload",
         formData,
         {
           headers: {
@@ -45,7 +45,7 @@ const Upload = () => {
 
   const handleAnalyze = async (text) => {
     try {
-      const response = await axios.post("http://localhost:8080/api/analyze", {
+      const response = await axios.post("https://docanalyzer-backend.onrender.com/api/analyze", {
         text,
       });
       setAnalysis(response.data);
