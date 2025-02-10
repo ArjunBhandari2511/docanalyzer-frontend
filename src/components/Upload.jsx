@@ -93,13 +93,6 @@ const Upload = () => {
           Upload File
         </button>
 
-        {extractedText && (
-          <div className="mt-4 p-3 border rounded bg-light">
-            <h5>Extracted Text:</h5>
-            <p>{extractedText}</p>
-          </div>
-        )}
-
         {analysis && (
           <div className="mt-4 p-3 border rounded bg-light">
             <h5>Analysis:</h5>
